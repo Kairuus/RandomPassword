@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Password Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="container">
+        <div class="generator">
+            <h1>Random Password Generator</h1>
+            <div class="lenghtLabel">Lenght
+                <button id="lenghtBtnMinus">-</button>
+                <input type="number" name='lenght' id="passwordLenght" value="8" max="20" min="8">
+                <button id="lenghtBtnPlus">+</button>
+            </div>
+            <div class="display">
+                <input type="text" id="password">
+                <span id="copyBtn"><i class="fa-solid fa-copy"></i></span>
+            </div>
+            <button id="btn">GENERATE <i class="fa-solid fa-bolt"></i></button>
+        </div>
+    </div>
+
+    <script>
+
+        let passwordLenght = document.getElementById('passwordLenght')
+        let lenghtBtnMinus = document.getElementById('lenghtBtnMinus')
+        let lenghtBtnPlus = document.getElementById('lenghtBtnPlus')
+        let passwordBox = document.getElementById('password')
+        let generateBtn = document.getElementById('btn')
+        let copyBtn = document.getElementById('copyBtn')
+
+        passwordLenght.addEventListener('input', () => {
+            if(passwordLenght.value > 20){
+                passwordLenght.value = 20
+            }else if(passwordLenght.value < 8){
+                passwordLenght.value = 8
+            }
+        })
+
+        lenghtBtnMinus.addEventListener('click', () => {
+            if(passwordLenght.value > 8){
+                passwordLenght.value--
+            }
+        })
+
+        lenghtBtnPlus.addEventListener('click', () => {
+            if(passwordLenght.value < 20){
+                passwordLenght.value++
+            }
+        })
+
+        generateBtn.addEventListener('click', createPassword)
+
+        copyBtn.addEventListener('click', copyPassword)
+
+        let allChars = 'ABCDEGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%¨&*()-_=+{[]}~^></?'
+
+        function createPassword(){
+            let password = ''
+
+            while(password.length < passwordLenght.value ){
+                password += allChars[Math.floor(Math.random() * allChars.length)]
+            }
+            passwordBox.value = password
+        }
+
+        function copyPassword(){
+            passwordBox.select()
+            document.execCommand('copy')
+        }
+    </script>
+</body>
+</html>
